@@ -2,6 +2,8 @@ const spinner = document.querySelector("#spinner");
 const pokemon_container = document.querySelector("#pokemon-container");
 const previous = document.querySelector("#previous");
 const next = document.querySelector("#next");
+const formSearch = document.querySelector("#formSearch");
+const btnClear = document.querySelector("#button-clear");
 /// utilidad remover child
 function removeChildNodes(parent) {
 	while (parent.firstChild) {
@@ -20,6 +22,12 @@ previous.addEventListener("click", () => {
 next.addEventListener("click", () => {
 	offset += 9;
 	removeChildNodes(pokemon_container);
+	get_Pokemons(offset, limit);
+});
+/// Clear pantalla
+btnClear.addEventListener("click", () => {
+	removeChildNodes(pokemon_container);
+	formSearch.querySelector('[name="searchName"]').value = '';
 	get_Pokemons(offset, limit);
 });
 
@@ -44,6 +52,25 @@ function get_Pokemons(offset, limit) {
 		get_Pokemon(index);
 	}
 }
+
+function get_pokemon_name(name) {
+	fetch(`${URL_POKEMON}${name}/`)
+		.then((res) => res.json())
+		.then((data) => {
+			card_pokemon(data);
+			spinner.style.display = "none";
+		});
+}
+
+// form
+formSearch.addEventListener("submit", (e) => {
+	e.preventDefault();
+	let searchName = formSearch
+		.querySelector('[name="searchName"]')
+		.value.toLowerCase();
+	removeChildNodes(pokemon_container);
+	get_pokemon_name(searchName);
+});
 
 /// utilidades
 const type_colors = {
@@ -81,23 +108,22 @@ function card_pokemon(pokemon) {
 	card.classList.add("h-auto");
 	let card_header = `<div class="card-header">
 		<div class="d-flex justify-content-between align-items-end">
-		<h6 class="card-title text-capitalize">#${pokemon.id
-			.toString()
-			.padStart(3, 0)} ${pokemon.name}</h6>	
-		<img
-				class="img-fluid"
-				src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${
-					pokemon.id
-				}.png"
-				alt=""
-			/>
-			
+			<h6 class="card-title text-capitalize text-start">#${pokemon.id
+				.toString()
+				.padStart(3, 0)} ${pokemon.name}</h6>	
+			<img
+					class="img-fluid text-end"
+					src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${
+						pokemon.id
+					}.png"
+					alt=""
+				/>
 		</div>
 	</div>`;
 	card.innerHTML = card_header;
 
 	const card_img = document.createElement("img");
-	card_img.classList.add('"card-img-top');
+	card_img.classList.add("card-img-top");
 	card_img.src = pokemon.sprites.other.home.front_default;
 
 	const card_body = document.createElement("div");
@@ -121,13 +147,87 @@ function card_pokemon(pokemon) {
 	});
 	card_body.appendChild(card_body_types);
 
+	const button = document.createElement("button");
+	button.classList.add("btn");
+	button.classList.add("btn-primary");
+	button.classList.add("btn-sm");
+	button.setAttribute("data-bs-toggle", "modal");
+	button.setAttribute("data-bs-target", "#pokeModal");
+	button.setAttribute("data-pokemon", `${pokemon.id}`);
+	button.setAttribute("onclick", `modal_alert(${pokemon.id})`);
+	button.innerHTML = `Stats <i class="fa-solid fa-signal"></i>`;
+
+	const card_footer = document.createElement("div");
+	card_footer.classList.add("card-footer");
+	card_footer.classList.add("text-center");
+	card_footer.appendChild(button);
+
 	// agrego element a card
 	card.appendChild(card_img);
 	card.appendChild(card_body);
+	card.appendChild(card_footer);
 	// agrego card a col
 	col.appendChild(card);
 	// agrego col a container
 	pokemon_container.appendChild(col);
+}
+
+function modal_alert(id) {
+	const myModal = document.querySelector("#pokeModal");
+	let modal_title = myModal.querySelector("#pokeModalLabel");
+	let modal_body = myModal.querySelector(".modal-body");
+
+	fetch(`${URL_POKEMON}${id}/`)
+		.then((res) => res.json())
+		.then((data) => {
+			let poke = data;
+
+			let html_template_title = `<h6 class="card-title text-capitalize">#${poke.id
+				.toString()
+				.padStart(3, 0)} ${poke.name}</h6>`;
+			modal_title.innerHTML = html_template_title;
+
+			let html_template_body_start = `<div class="row justify-content-center align-items-center">
+				<div class="col-6">
+					<ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="normal-tab" data-bs-toggle="tab" data-bs-target="#normal-tab-pane" type="button" role="tab" aria-controls="normal-tab-pane" aria-selected="true">Normal</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="shiny-tab" data-bs-toggle="tab" data-bs-target="#shiny-tab-pane" type="button" role="tab" aria-controls="shiny-tab-pane" aria-selected="false">Shiny</button>
+						</li>
+					</ul>
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="normal-tab-pane" role="tabpanel" aria-labelledby="normal-tab" tabindex="0">
+							<img class="img-fluid" src="${poke.sprites.other.home.front_default}"></img>
+						</div>
+						<div class="tab-pane fade" id="shiny-tab-pane" role="tabpanel" aria-labelledby="shiny-tab" tabindex="0">
+							<img class="img-fluid" src="${poke.sprites.other.home.front_shiny}"></img>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<ul class="list-group list-group-flush">`;
+			let html_template_body_end = `</ul>
+				</div>
+			</div>`;
+			let ul = "";
+			for (let index = 0; index < poke.stats.length; index++) {
+				const element = poke.stats[index];
+				let stat100 = 255;
+				let statBase = element.base_stat;
+				let statPorcentaje = (statBase * 100) / stat100;
+
+				let html_template_stat = `<li class="list-group-item text-uppercase">${element.stat.name}
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="${statPorcentaje}" aria-valuemin="0" aria-valuemax="100" style="width: ${statPorcentaje}%">${statBase}/${stat100}</div>
+					</div>
+				</li>`;
+				ul += html_template_stat;
+			}
+			modal_body.innerHTML =
+				html_template_body_start + ul + html_template_body_end;
+		});
 }
 
 get_Pokemons(offset, limit);

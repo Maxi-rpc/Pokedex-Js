@@ -11,115 +11,51 @@
 			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
 			crossorigin="anonymous"
 		/>
+		<!-- fontawesome icons -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+			integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
 	</head>
 	<body>
-		<div class="container">
-			<nav class="navbar navbar-expand-lg bg-light">
-				<div class="container-fluid">
-					<a class="navbar-brand" href="#">Navbar</a>
-					<button
-						class="navbar-toggler"
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent"
-						aria-expanded="false"
-						aria-label="Toggle navigation"
-					>
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="#">Home</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Link</a>
-							</li>
-							<li class="nav-item dropdown">
-								<a
-									class="nav-link dropdown-toggle"
-									href="#"
-									role="button"
-									data-bs-toggle="dropdown"
-									aria-expanded="false"
-								>
-									Dropdown
-								</a>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">Action</a></li>
-									<li><a class="dropdown-item" href="#">Another action</a></li>
-									<li><hr class="dropdown-divider" /></li>
-									<li>
-										<a class="dropdown-item" href="#">Something else here</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						<form class="d-flex" role="search">
-							<input
-								class="form-control me-2"
-								type="search"
-								placeholder="Search"
-								aria-label="Search"
-							/>
-							<button class="btn btn-outline-success" type="submit">
-								Search
-							</button>
-						</form>
-					</div>
-				</div>
-			</nav>
-		</div>
 		<div class="container">
 			<div class="row justify-content-center my-2">
 				<div class="col-12 text-center">
 					<h1>Pokedex usando Poke API</h1>
 				</div>
-			</div>
-			<section id="pokemon-container" class="row">
-				<div class="col-4 my-1 d-none">
-					<div class="card shadow border-light" style="width: 18rem">
-						<div class="card-header">
-							<div class="d-flex justify-content-between align-items-end">
-								<img
-									class="img-fluid"
-									src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/6.png"
-									alt=""
-								/>
-								<h5 class="card-title">#006 Charizard</h5>
-							</div>
+				<div class="col-6">
+					<form id="formSearch" class="row justify-content-center">
+						<div class="input-group mb-3">
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Buscar Pokemon"
+								aria-label="Buscar Pokemon"
+								aria-describedby="button-addon2"
+								name="searchName"
+								required
+							/>
+							<button
+								class="btn btn-outline-secondary"
+								type="submit"
+								id="button-addon2"
+							>
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+							<button id="button-clear" class="btn btn-outline-secondary" type="button">
+								Clear
+							</button>
 						</div>
-						<img
-							src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png"
-							class="card-img-top"
-							alt="..."
-						/>
-						<div class="card-body">
-							<div class="d-flex justify-content-center text-center">
-								<div class="col-6">
-									<button
-										style="width: 90%"
-										type="button"
-										class="btn btn-primary rounded-pill text-capitalize"
-									>
-										fire
-									</button>
-								</div>
-								<div class="col-6">
-									<button
-										style="width: 90%"
-										type="button"
-										class="btn btn-primary rounded-pill text-capitalize"
-									>
-										flying
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
+					</form>
 				</div>
-			</section>
+			</div>
+		</div>
+		<div class="container">
+			<section id="pokemon-container" class="row"></section>
+
 			<section class="row justify-content-center my-2">
 				<div class="col-6 text-center">
 					<nav aria-label="Page navigation example">
@@ -138,38 +74,20 @@
 
 		<footer class="container-fluid mt-2">
 			<div class="row">
-				<div class="col-4">
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">An item</li>
-						<li class="list-group-item">A second item</li>
-						<li class="list-group-item">A third item</li>
-						<li class="list-group-item">A fourth item</li>
-						<li class="list-group-item">And a fifth one</li>
-					</ul>
-				</div>
-				<div class="col-4">
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">An item</li>
-						<li class="list-group-item">A second item</li>
-						<li class="list-group-item">A third item</li>
-						<li class="list-group-item">A fourth item</li>
-						<li class="list-group-item">And a fifth one</li>
-					</ul>
-				</div>
-				<div class="col-4">
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">An item</li>
-						<li class="list-group-item">A second item</li>
-						<li class="list-group-item">A third item</li>
-						<li class="list-group-item">A fourth item</li>
-						<li class="list-group-item">And a fifth one</li>
-					</ul>
-				</div>
 				<div class="col-12 text-center">
-					<p class="text-capitalize">Copyright - design by Maxi</p>
+					<p class="text-capitalize">
+						<a
+							class="link-dark"
+							href="https://github.com/Maxi-rpc"
+							target="_blank"
+							><i class="fa-brands fa-github"></i> Github</a
+						>
+						Design by Maxi-rpc
+					</p>
 				</div>
 			</div>
 		</footer>
+		<!-- spinner -->
 		<div
 			id="spinner"
 			class="spinner-border text-primary"
@@ -177,6 +95,31 @@
 			style="width: 5rem; height: 5rem"
 		>
 			<span class="visually-hidden">Loading...</span>
+		</div>
+
+		<!-- Modal -->
+		<div
+			class="modal fade"
+			id="pokeModal"
+			tabindex="-1"
+			aria-labelledby="pokeModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="pokeModalLabel">Modal title</h1>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">...</div>
+					<div class="modal-footer"></div>
+				</div>
+			</div>
 		</div>
 		<!-- bootstrap js -->
 		<script
