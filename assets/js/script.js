@@ -27,7 +27,7 @@ next.addEventListener("click", () => {
 /// Clear pantalla
 btnClear.addEventListener("click", () => {
 	removeChildNodes(pokemon_container);
-	formSearch.querySelector('[name="searchName"]').value = '';
+	formSearch.querySelector('[name="searchName"]').value = "";
 	get_Pokemons(offset, limit);
 });
 
@@ -59,6 +59,11 @@ function get_pokemon_name(name) {
 		.then((data) => {
 			card_pokemon(data);
 			spinner.style.display = "none";
+		})
+		.catch((error) => {
+			console.log(error);
+			let msj = "No se encontro pokemon, verificar si esta bien escrito.";
+			alert_message(msj);
 		});
 }
 
@@ -155,7 +160,7 @@ function card_pokemon(pokemon) {
 	button.setAttribute("data-bs-target", "#pokeModal");
 	button.setAttribute("data-pokemon", `${pokemon.id}`);
 	button.setAttribute("onclick", `modal_alert(${pokemon.id})`);
-	button.innerHTML = `Stats <i class="fa-solid fa-signal"></i>`;
+	button.innerHTML = `Detalles <i class="fa-solid fa-plus"></i>`;
 
 	const card_footer = document.createElement("div");
 	card_footer.classList.add("card-footer");
@@ -228,6 +233,17 @@ function modal_alert(id) {
 			modal_body.innerHTML =
 				html_template_body_start + ul + html_template_body_end;
 		});
+}
+
+function alert_message(msj) {
+	let col = document.createElement("div");
+	col.classList.add("col-12");
+
+	let html_template_alert = `<div class="alert alert-danger" role="alert">
+		${msj}
+	</div>`;
+	col.innerHTML = html_template_alert;
+	pokemon_container.appendChild(col)
 }
 
 get_Pokemons(offset, limit);
