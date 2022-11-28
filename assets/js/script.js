@@ -101,7 +101,7 @@ const type_colors = {
 
 function card_pokemon(pokemon) {
 	const col = document.createElement("div");
-	col.classList.add("col-4");
+	col.classList.add("col-sm-6");
 	col.classList.add("col-md-4");
 	col.classList.add("my-1");
 	col.classList.add("h-auto");
