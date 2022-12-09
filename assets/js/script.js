@@ -101,16 +101,10 @@ const type_colors = {
 
 function card_pokemon(pokemon) {
 	const col = document.createElement("div");
-	col.classList.add("col-sm-6");
-	col.classList.add("col-md-4");
-	col.classList.add("my-1");
-	col.classList.add("h-auto");
+	col.classList.add("col-6", "col-sm-6", "col-md-4", "my-1", "h-auto");
 
 	const card = document.createElement("div");
-	card.classList.add("card");
-	card.classList.add("shadow");
-	card.classList.add("border-light");
-	card.classList.add("h-auto");
+	card.classList.add("card", "shadow", "border-light", "h-auto");
 	let card_header = `<div class="card-header">
 		<div class="d-flex justify-content-between align-items-end">
 			<h6 class="card-title text-capitalize text-start">#${pokemon.id
@@ -134,9 +128,11 @@ function card_pokemon(pokemon) {
 	const card_body = document.createElement("div");
 	card_body.classList.add("card-body");
 	const card_body_types = document.createElement("div");
-	card_body_types.classList.add("d-flex");
-	card_body_types.classList.add("justify-content-center");
-	card_body_types.classList.add("text-center");
+	card_body_types.classList.add(
+		"d-flex",
+		"justify-content-center",
+		"text-center"
+	);
 
 	pokemon.types.forEach((element) => {
 		let html_element = `<div class="col-6">
@@ -153,9 +149,7 @@ function card_pokemon(pokemon) {
 	card_body.appendChild(card_body_types);
 
 	const button = document.createElement("button");
-	button.classList.add("btn");
-	button.classList.add("btn-primary");
-	button.classList.add("btn-sm");
+	button.classList.add("btn", "btn-primary", "btn-sm");
 	button.setAttribute("data-bs-toggle", "modal");
 	button.setAttribute("data-bs-target", "#pokeModal");
 	button.setAttribute("data-pokemon", `${pokemon.id}`);
@@ -163,8 +157,7 @@ function card_pokemon(pokemon) {
 	button.innerHTML = `Detalles <i class="fa-solid fa-plus"></i>`;
 
 	const card_footer = document.createElement("div");
-	card_footer.classList.add("card-footer");
-	card_footer.classList.add("text-center");
+	card_footer.classList.add("card-footer", "text-center");
 	card_footer.appendChild(button);
 
 	// agrego element a card
@@ -223,10 +216,8 @@ function modal_alert(id) {
 				let statBase = element.base_stat;
 				let statPorcentaje = (statBase * 100) / stat100;
 
-				let html_template_stat = `<li class="list-group-item text-uppercase">${element.stat.name}
-					<div class="progress">
-						<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="${statPorcentaje}" aria-valuemin="0" aria-valuemax="100" style="width: ${statPorcentaje}%">${statBase}/${stat100}</div>
-					</div>
+				let html_template_stat = `<li class="list-group-item text-uppercase d-flex justify-content-between">
+				<span>${element.stat.name}: </span><span class='fw-bold'>${statBase}</span>
 				</li>`;
 				ul += html_template_stat;
 			}
@@ -239,11 +230,13 @@ function alert_message(msj) {
 	let col = document.createElement("div");
 	col.classList.add("col-12");
 
-	let html_template_alert = `<div class="alert alert-danger" role="alert">
-		${msj}
-	</div>`;
-	col.innerHTML = html_template_alert;
-	pokemon_container.appendChild(col)
+	let alert = document.createElement("div");
+	alert.classList.add("alert", "alert-danger", "text-center");
+	alert.setAttribute("role", "alert");
+	alert.innerText = msj;
+
+	col.appendChild(alert);
+	pokemon_container.appendChild(col);
 }
 
 get_Pokemons(offset, limit);
