@@ -1,4 +1,9 @@
 # Pokedex-Js
 
-Se realiza pokedex en base a api de pokemon
-link https://maxi-rpc.github.io/Pokedex-Js/
+## Tech utilizadas:
+- HTML
+- CSS
+- Javascript
+- Bootstrap
+
+Se realiza pokedex en JAVASCRIPT VAINILLA utilizando la [pokeApi](https://pokeapi.co/) - [Live](https://maxi-rpc.github.io/Pokedex-Js/) 
