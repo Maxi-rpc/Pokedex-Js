@@ -120,11 +120,11 @@ function card_pokemon(pokemon) {
 		</div>
 	</div>`;
 	card.innerHTML = card_header;
-
+	console.log(pokemon.sprites)
 	const card_img = document.createElement("img");
 	card_img.classList.add("card-img-top");
-	card_img.src = pokemon.sprites.other.home.front_default;
-
+	card_img.src = pokemon.sprites.other["official-artwork"].front_default;
+	
 	const card_body = document.createElement("div");
 	card_body.classList.add("card-body");
 	const card_body_types = document.createElement("div");
