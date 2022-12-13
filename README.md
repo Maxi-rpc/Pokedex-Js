@@ -8,3 +8,7 @@
 - Bootstrap
 
 Se realiza pokedex en JAVASCRIPT VAINILLA utilizando la [pokeApi](https://pokeapi.co/) - [Live](https://maxi-rpc.github.io/Pokedex-Js/) 
+
+### FALTA 
+- listado de los nombres para dar opciones
+- ordenar por num ID
