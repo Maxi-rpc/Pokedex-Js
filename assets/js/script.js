@@ -33,6 +33,8 @@ btnClear.addEventListener("click", () => {
 	formSearch.querySelector('[name="searchName"]').value = "";
 	alert_error.classList.add("d-none");
 	alert_sugerencia.classList.add("d-none");
+	previous.classList.remove("d-none");
+	next.classList.remove("d-none");
 	get_Pokemons(offset, limit);
 });
 /// api
@@ -111,6 +113,8 @@ formSearch.addEventListener("submit", (e) => {
 		.querySelector('[name="searchName"]')
 		.value.toLowerCase();
 	removeChildNodes(pokemon_container);
+	previous.classList.add("d-none");
+	next.classList.add("d-none");
 	get_pokemon_name(searchName);
 });
 
@@ -285,9 +289,10 @@ function alert_message_sugerencia(msj, names) {
 alert_sugerencia.addEventListener("click", (e) => {
 	e.preventDefault();
 	let name = e.target.id;
-	removeChildNodes(pokemon_container);
-	get_pokemon_name(name);
-	console.log(e.target);
+	if (name != "sugerencia") {
+		removeChildNodes(pokemon_container);
+		get_pokemon_name(name);
+	}
 });
 
 /// main
