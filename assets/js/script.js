@@ -1,16 +1,19 @@
+/// ids
 const spinner = document.querySelector("#spinner");
 const pokemon_container = document.querySelector("#pokemon-container");
 const previous = document.querySelector("#previous");
 const next = document.querySelector("#next");
 const formSearch = document.querySelector("#formSearch");
 const btnClear = document.querySelector("#button-clear");
+const alert_sugerencia = document.querySelector("#sugerencia");
+const alert_error = document.querySelector("#alert_error");
 /// utilidad remover child
 function removeChildNodes(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
 }
-/// atras
+// atras
 previous.addEventListener("click", () => {
 	if (offset != 1) {
 		offset -= 9;
@@ -18,25 +21,27 @@ previous.addEventListener("click", () => {
 		get_Pokemons(offset, limit);
 	}
 });
-/// adelante
+// adelante
 next.addEventListener("click", () => {
 	offset += 9;
 	removeChildNodes(pokemon_container);
 	get_Pokemons(offset, limit);
 });
-/// Clear pantalla
+// Clear pantalla
 btnClear.addEventListener("click", () => {
 	removeChildNodes(pokemon_container);
 	formSearch.querySelector('[name="searchName"]').value = "";
 	get_Pokemons(offset, limit);
 });
-
+/// api
 const URL = "https://pokeapi.co/api/v2/";
 const URL_POKEMON = `${URL}pokemon/`;
+const Total_pokemons = 905;
 
 let offset = 1; // 1er pokemon
 let limit = 8; // hasta esa cantidad
-
+let list_pokemons_names = get_pokemon_list_names();
+// get pokemon
 function get_Pokemon(id) {
 	fetch(`${URL_POKEMON}${id}/`)
 		.then((res) => res.json())
@@ -45,14 +50,14 @@ function get_Pokemon(id) {
 			spinner.style.display = "none";
 		});
 }
-
+// get pokemons
 function get_Pokemons(offset, limit) {
 	spinner.style.display = "block";
 	for (let index = offset; index <= offset + limit; index++) {
 		get_Pokemon(index);
 	}
 }
-
+// get pokemon by name
 function get_pokemon_name(name) {
 	fetch(`${URL_POKEMON}${name}/`)
 		.then((res) => res.json())
@@ -64,9 +69,39 @@ function get_pokemon_name(name) {
 			console.log(error);
 			let msj = "No se encontro pokemon, verificar si esta bien escrito.";
 			alert_message(msj);
+			let names = get_pokemon_sugerencia(name);
+			msj = "Sugerencias: ";
+			alert_message_sugerencia(msj, names);
 		});
 }
-
+// get pokemons list names
+function get_pokemon_list_names() {
+	let list_names = [];
+	for (let index = 1; index < 905; index++) {
+		let id = index;
+		fetch(`${URL_POKEMON}${id}/`)
+			.then((res) => res.json())
+			.then((data) => {
+				data.name;
+				list_names.push(data.name);
+			});
+	}
+	return list_names;
+}
+// get sugerencia
+function get_pokemon_sugerencia(value) {
+	let name_search = value[0] + value[1] + value[2];
+	let list_sugerencias = [];
+	for (let index = 0; index < list_pokemons_names.length; index++) {
+		let name = list_pokemons_names[index];
+		let name_short = name[0] + name[1] + name[2];
+		if (name_search == name_short) {
+			let sugerencia = list_pokemons_names.find((pokemon) => pokemon == name);
+			list_sugerencias.push(sugerencia);
+		}
+	}
+	return list_sugerencias;
+}
 // form
 formSearch.addEventListener("submit", (e) => {
 	e.preventDefault();
@@ -101,7 +136,7 @@ const type_colors = {
 
 function card_pokemon(pokemon) {
 	const col = document.createElement("div");
-	col.classList.add("col-6", "col-sm-6", "col-md-2", "my-1", "h-auto");
+	col.classList.add("col-6", "col-sm-6", "col-md-4", "my-1", "h-auto");
 
 	const card = document.createElement("div");
 	card.classList.add("card", "shadow", "border-light", "h-auto");
@@ -120,11 +155,10 @@ function card_pokemon(pokemon) {
 		</div>
 	</div>`;
 	card.innerHTML = card_header;
-	console.log(pokemon.sprites)
 	const card_img = document.createElement("img");
 	card_img.classList.add("card-img-top");
 	card_img.src = pokemon.sprites.other["official-artwork"].front_default;
-	
+
 	const card_body = document.createElement("div");
 	card_body.classList.add("card-body");
 	const card_body_types = document.createElement("div");
@@ -227,16 +261,34 @@ function modal_alert(id) {
 }
 
 function alert_message(msj) {
-	let col = document.createElement("div");
-	col.classList.add("col-12");
-
-	let alert = document.createElement("div");
-	alert.classList.add("alert", "alert-danger", "text-center");
-	alert.setAttribute("role", "alert");
-	alert.innerText = msj;
-
-	col.appendChild(alert);
-	pokemon_container.appendChild(col);
+	alert_error.innerText = msj;
+	alert_error.classList.remove("d-none");
 }
 
-get_Pokemons(offset, limit);
+function alert_message_sugerencia(msj, names) {
+	alert_sugerencia.innerHTML = msj + `</br>`;
+
+	for (let index = 0; index < names.length; index++) {
+		const element = names[index];
+		let alert_link = document.createElement("btn");
+		alert_link.classList.add("btn", "btn-primary", "m-2");
+		alert_link.setAttribute("id", element);
+		alert_link.innerText = element;
+		alert_sugerencia.appendChild(alert_link);
+	}
+
+	alert_sugerencia.classList.remove("d-none");
+}
+
+alert_sugerencia.addEventListener("click", (e) => {
+	e.preventDefault();
+	let name = e.target.id;
+	removeChildNodes(pokemon_container);
+	get_pokemon_name(name);
+});
+
+/// main
+function main() {
+	get_Pokemons(offset, limit);
+}
+main();
