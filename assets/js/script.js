@@ -31,6 +31,8 @@ next.addEventListener("click", () => {
 btnClear.addEventListener("click", () => {
 	removeChildNodes(pokemon_container);
 	formSearch.querySelector('[name="searchName"]').value = "";
+	alert_error.classList.add("d-none");
+	alert_sugerencia.classList.add("d-none");
 	get_Pokemons(offset, limit);
 });
 /// api
@@ -285,6 +287,7 @@ alert_sugerencia.addEventListener("click", (e) => {
 	let name = e.target.id;
 	removeChildNodes(pokemon_container);
 	get_pokemon_name(name);
+	console.log(e.target);
 });
 
 /// main
