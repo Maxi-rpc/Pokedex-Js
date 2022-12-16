@@ -7,6 +7,7 @@ const formSearch = document.querySelector("#formSearch");
 const btnClear = document.querySelector("#button-clear");
 const alert_sugerencia = document.querySelector("#sugerencia");
 const alert_error = document.querySelector("#alert_error");
+const filter_types = document.querySelector("#pokemon-types");
 /// utilidad remover child
 function removeChildNodes(parent) {
 	while (parent.firstChild) {
@@ -40,11 +41,14 @@ btnClear.addEventListener("click", () => {
 /// api
 const URL = "https://pokeapi.co/api/v2/";
 const URL_POKEMON = `${URL}pokemon/`;
+const URL_POKEMON_TYPES = `${URL}type/`;
 const Total_pokemons = 905;
+const Total_types = 18;
 
 let offset = 1; // 1er pokemon
 let limit = 8; // hasta esa cantidad
 let list_pokemons_names = get_pokemon_list_names();
+let list_pokemons_types = get_pokemon_list_types();
 // get pokemon
 function get_Pokemon(id) {
 	fetch(`${URL_POKEMON}${id}/`)
@@ -105,6 +109,17 @@ function get_pokemon_sugerencia(value) {
 		}
 	}
 	return list_sugerencias;
+}
+// get pokemons list types
+function get_pokemon_list_types() {
+	for (let index = 1; index < Total_types; index++) {
+		let id = index;
+		fetch(`${URL_POKEMON_TYPES}${id}/`)
+			.then((res) => res.json())
+			.then((data) => {
+				filter_btn(data.name);
+			});
+	}
 }
 // form
 formSearch.addEventListener("submit", (e) => {
@@ -295,6 +310,16 @@ alert_sugerencia.addEventListener("click", (e) => {
 	}
 });
 
+function filter_btn(name) {
+	let html_element_btn = `<button
+	id='${name}'
+	style="background-color: ${type_colors[name]}"
+	type="button"
+	class="btn text-white btn-sm m-2 rounded-pill border border-0 text-capitalize">
+	${name}
+</button>`;
+	filter_types.innerHTML += html_element_btn;
+}
 /// main
 function main() {
 	get_Pokemons(offset, limit);

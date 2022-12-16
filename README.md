@@ -14,3 +14,4 @@ Se realiza pokedex en JAVASCRIPT VAINILLA utilizando la [pokeApi](https://pokeap
 ### FALTA
 
 - ordenar por num ID
+- filtrar por tipos
