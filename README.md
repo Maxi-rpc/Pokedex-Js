@@ -11,23 +11,34 @@
 - Javascript
 - Bootstrap
 
-Se realiza pokedex en JAVASCRIPT VAINILLA utilizando la [pokeApi](https://pokeapi.co/) - [DEMO](https://maxi-rpc.github.io/Pokedex-Js/)
+Se realiza pokedex en Js utilizando la [pokeApi](https://pokeapi.co/) - [Ver demo](https://maxi-rpc.github.io/Pokedex-Js/)
 
-### FALTA
-
-- ordenar por num ID
-- filtrar por tipos
+To DO
+- [x] Home Page
+- [x] Search Bar
+- [x] Card pokemon
+- [x] Api poke api
+- [x] Modal con detalles
+- [x] Test prev 1
+- [ ] ordenar por num ID
+- [ ] filtrar por tipos
 
 #### Images
 
 **Home**
 
-![alt 0](./assets/image/md/0.png)
+<p style="text-align: center">
+    <img src="./assets/image/md/0.png" alt="0">
+</p>
 
 **Buscar Pokemon**
 
-![alt 1](./assets/image/md/1.png)
+<p style="text-align: center">
+    <img src="./assets/image/md/1.png" alt="1">
+</p>
 
 **Detalles**
 
-![alt 2](./assets/image/md/2.png)
+<p style="text-align: center">
+    <img src="./assets/image/md/2.png" alt="2">
+</p>
