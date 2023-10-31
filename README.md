@@ -1,5 +1,5 @@
 [![version](https://img.shields.io/badge/version-1.0.0-blue)]()
-[![demo](https://img.shields.io/badge/live-web-blue)](https://maxi-rpc.github.io/Pokedex-Js/)
+[![demo](https://img.shields.io/badge/demo-web-blue)](https://maxi-rpc.github.io/Pokedex-Js/)
 
 # Pokedex-Js
 
