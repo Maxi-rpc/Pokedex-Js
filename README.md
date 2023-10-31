@@ -1,3 +1,6 @@
+[![version](https://img.shields.io/badge/version-1.0.0-blue)]()
+[![web](https://img.shields.io/badge/live-web-blue)](https://maxi-rpc.github.io/Pokedex-Js/)
+
 # Pokedex-Js
 
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](#)
@@ -11,7 +14,7 @@
 - Javascript
 - Bootstrap
 
-Se realiza pokedex en Js utilizando la [pokeApi](https://pokeapi.co/) - [Ver demo](https://maxi-rpc.github.io/Pokedex-Js/)
+Se realiza pokedex en Js utilizando la [pokeApi](https://pokeapi.co/)
 
 To DO
 - [x] Home Page
